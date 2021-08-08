@@ -11,6 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Abstractions;
+using Core.Application;
+using Infraestructure.EF;
+using UI.WebApi.Extensions;
 
 namespace UI.WebApi
 {
@@ -26,7 +30,8 @@ namespace UI.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.ConfigureApplicationLayer();
+            services.ConfigureInfraestructureLayer(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -47,7 +52,7 @@ namespace UI.WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseErrorHandlerMiddlewhere();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
